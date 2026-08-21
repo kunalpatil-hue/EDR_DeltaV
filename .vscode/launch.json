@@ -1,0 +1,70 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Sim: scenario (prompt for name)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/sim/run_sim.py",
+      "args": ["--scenario", "${input:scenario}", "--plot"],
+      "console": "integratedTerminal",
+      "preLaunchTask": "EDR: build core"
+    },
+    {
+      "name": "Sim: truck frontal 40 km/h",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/sim/run_sim.py",
+      "args": ["--scenario", "truck_frontal_rigid_40kph", "--plot",
+               "--save-csv", "out/signals.csv", "--save-json", "out/events.json"],
+      "console": "integratedTerminal",
+      "preLaunchTask": "EDR: build core"
+    },
+    {
+      "name": "Sim: hard braking (must NOT fire Loop A)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/sim/run_sim.py",
+      "args": ["--scenario", "hard_braking_0g8", "--plot"],
+      "console": "integratedTerminal",
+      "preLaunchTask": "EDR: build core"
+    },
+    {
+      "name": "Sim: CSV file",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/sim/run_sim.py",
+      "args": ["--input", "${input:csvPath}", "--plot"],
+      "console": "integratedTerminal",
+      "preLaunchTask": "EDR: build core"
+    },
+    {
+      "name": "Validation matrix + sweeps",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/sim/validate.py",
+      "args": ["--sweep", "--rates"],
+      "console": "integratedTerminal",
+      "preLaunchTask": "EDR: build core"
+    },
+    {
+      "name": "C core: gdb through the Python harness",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "/usr/bin/python3",
+      "args": ["${workspaceFolder}/sim/run_sim.py", "--scenario", "truck_frontal_rigid_40kph"],
+      "cwd": "${workspaceFolder}",
+      "MIMode": "gdb",
+      "setupCommands": [
+        { "text": "-enable-pretty-printing", "ignoreFailures": true }
+      ]
+    }
+  ],
+  "inputs": [
+    { "id": "scenario", "type": "promptString",
+      "description": "scenario name (run the 'EDR: list scenarios' task to see them)",
+      "default": "marginal_25kph_150ms" },
+    { "id": "csvPath", "type": "promptString",
+      "description": "path to input CSV", "default": "data/sample_capture.csv" }
+  ]
+}

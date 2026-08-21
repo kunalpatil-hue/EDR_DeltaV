@@ -1,0 +1,10 @@
+{
+  "C_Cpp.default.includePath": ["${workspaceFolder}/firmware/inc"],
+  "C_Cpp.default.cStandard": "c99",
+  "C_Cpp.default.compilerArgs": ["-Wall", "-Wextra"],
+  "python.analysis.extraPaths": ["${workspaceFolder}/sim"],
+  "python.testing.pytestEnabled": true,
+  "python.testing.pytestArgs": ["tests"],
+  "files.associations": { "*.h": "c" },
+  "editor.rulers": [80]
+}

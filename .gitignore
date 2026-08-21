@@ -1,0 +1,8 @@
+build/
+out/
+__pycache__/
+.pytest_cache/
+*.so
+*.dll
+*.dylib
+*.o

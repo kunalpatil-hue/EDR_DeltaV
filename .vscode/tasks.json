@@ -1,0 +1,45 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "EDR: build core",
+      "type": "shell",
+      "command": "python3 sim/build.py",
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": ["$gcc"],
+      "presentation": { "reveal": "always", "panel": "shared" }
+    },
+    {
+      "label": "EDR: build core (strict warnings)",
+      "type": "shell",
+      "command": "python3 sim/build.py --clean --strict",
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "EDR: validation matrix",
+      "type": "shell",
+      "command": "python3 sim/validate.py",
+      "dependsOn": "EDR: build core",
+      "group": { "kind": "test", "isDefault": true },
+      "presentation": { "reveal": "always" }
+    },
+    {
+      "label": "EDR: validation + sweeps",
+      "type": "shell",
+      "command": "python3 sim/validate.py --sweep --rates --seeds 5",
+      "dependsOn": "EDR: build core"
+    },
+    {
+      "label": "EDR: pytest",
+      "type": "shell",
+      "command": "python3 -m pytest tests/ -v",
+      "dependsOn": "EDR: build core",
+      "group": "test"
+    },
+    {
+      "label": "EDR: list scenarios",
+      "type": "shell",
+      "command": "python3 sim/run_sim.py --list"
+    }
+  ]
+}
